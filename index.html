@@ -20,6 +20,7 @@
             overflow-x: hidden;
             line-height: 1.6;
             min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .container {
@@ -92,6 +93,8 @@
             animation: logoGlow 3s ease-in-out infinite alternate;
             cursor: pointer;
             transition: transform 0.3s ease;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         .logo.bounce {
@@ -142,6 +145,7 @@
             overflow: hidden;
             border-radius: 5px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            -webkit-tap-highlight-color: rgba(255,255,255,0.1);
         }
 
         .nav-link a::before {
@@ -472,6 +476,28 @@
             50% { transform: scaleY(1); }
         }
 
+        /* Мобильная анимация */
+        .mobile-tap-hint {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+            font-family: 'Determination Mono', monospace;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.3); }
+            70% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        }
+
         footer {
             background: linear-gradient(90deg, #000, #111, #000);
             padding: 50px 0;
@@ -523,6 +549,30 @@
             .soundtrack-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .mobile-tap-hint {
+                display: block;
+            }
+            
+            /* Оптимизация для мобильных аудио элементов */
+            audio {
+                min-height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .nav-link a {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -530,14 +580,13 @@
     <div class="bg-heart">
         <div class="heart"></div>
     </div>
+    
+    <div class="mobile-tap-hint">Коснитесь экрана для активации звука</div>
 
     <header>
         <div class="header-glow"></div>
         <div class="container">
             <h1 class="logo" id="main-logo">undertalemptiess</h1>
-            <audio id="dogSongAudio" preload="auto">
-                <source src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/bell_ring.mp3" type="audio/mpeg">
-            </audio>
         </div>
     </header>
 
@@ -652,7 +701,7 @@
                         </div>
                         
                         <div class="audio-player">
-                            <audio controls>
+                            <audio controls id="main-track">
                                 <source src="https://cdn.jumpshare.com/preview/HIQXqG8vATqJVIJc1hTS?type=audio" type="audio/mpeg">
                                 Ваш браузер не поддерживает аудио элемент.
                             </audio>
@@ -773,20 +822,83 @@
     </footer>
 
     <script>
-        // Глобальные переменные для управления состоянием
-        const sections = {
-            home: document.getElementById('home'),
-            about: document.getElementById('about'),
-            screenshots: document.getElementById('screenshots'),
-            soundtracks: document.getElementById('soundtracks'),
-            download: document.getElementById('download'),
-            news: document.getElementById('news'),
-            domains: document.getElementById('domains'),
-            contact: document.getElementById('contact')
+        // Глобальный объект для управления аудио
+        const audioManager = {
+            dogSong: null,
+            mainTrack: null,
+            audioUnlocked: false,
+            
+            // Инициализация аудио
+            init: function() {
+                // Создаем аудио элементы динамически
+                this.dogSong = new Audio();
+                this.dogSong.src = 'https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/bell_ring.mp3';
+                this.dogSong.preload = 'auto';
+                
+                // Получаем основной трек
+                this.mainTrack = document.getElementById('main-track');
+                
+                // Разблокировка аудио при первом касании
+                this.unlockAudio();
+            },
+            
+            // Разблокировка аудио для мобильных устройств
+            unlockAudio: function() {
+                const unlockHandler = () => {
+                    if (!this.audioUnlocked) {
+                        // Воспроизводим короткий пустой звук для разблокировки
+                        const silentAudio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQQAAAA=');
+                        silentAudio.volume = 0;
+                        
+                        silentAudio.play()
+                            .then(() => {
+                                this.audioUnlocked = true;
+                                document.querySelector('.mobile-tap-hint').style.display = 'none';
+                                console.log('Аудио разблокировано!');
+                            })
+                            .catch(e => console.log('Ошибка разблокировки аудио:', e));
+                        
+                        // Удаляем обработчик после первого использования
+                        document.removeEventListener('touchstart', unlockHandler);
+                        document.removeEventListener('mousedown', unlockHandler);
+                    }
+                };
+                
+                // Добавляем обработчики для десктопных и мобильных устройств
+                document.addEventListener('touchstart', unlockHandler, {once: true});
+                document.addEventListener('mousedown', unlockHandler, {once: true});
+            },
+            
+            // Воспроизведение Dogsong
+            playDogSong: function() {
+                if (!this.audioUnlocked) {
+                    console.log('Аудио заблокировано, требуется взаимодействие');
+                    return;
+                }
+                
+                const logo = document.getElementById('main-logo');
+                logo.classList.add('bounce');
+                
+                try {
+                    this.dogSong.currentTime = 0;
+                    this.dogSong.play()
+                        .then(() => console.log('Dogsong воспроизводится'))
+                        .catch(e => console.log('Ошибка воспроизведения Dogsong:', e));
+                } catch (e) {
+                    console.log('Ошибка при воспроизведении:', e);
+                }
+                
+                setTimeout(() => {
+                    logo.classList.remove('bounce');
+                }, 600);
+            }
         };
 
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация аудио
+            audioManager.init();
+            
             // Навигация
             initNavigation();
             
@@ -797,7 +909,9 @@
             initAudioPlayers();
             
             // Логотип
-            document.getElementById('main-logo').addEventListener('click', playDogSong);
+            document.getElementById('main-logo').addEventListener('click', () => {
+                audioManager.playDogSong();
+            });
         });
 
         // ИНИЦИАЛИЗАЦИЯ НАВИГАЦИИ
@@ -819,13 +933,14 @@
         // ПОКАЗ СЕКЦИИ
         function showSection(sectionId) {
             // Скрываем все секции
-            Object.values(sections).forEach(section => {
-                if(section) section.classList.remove('active');
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
             });
             
             // Показываем выбранную секцию
-            if(sections[sectionId]) {
-                sections[sectionId].classList.add('active');
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
             }
             
             // Обновляем активные кнопки
@@ -858,6 +973,15 @@
                 btn.addEventListener('mouseleave', function() {
                     this.style.transform = 'translateY(0)';
                 });
+                
+                // Для мобильных устройств
+                btn.addEventListener('touchstart', function() {
+                    this.style.transform = 'translateY(-1px)';
+                });
+                
+                btn.addEventListener('touchend', function() {
+                    this.style.transform = 'translateY(0)';
+                });
             });
         }
 
@@ -865,6 +989,11 @@
         function initAudioPlayers() {
             document.querySelectorAll('audio').forEach(audio => {
                 audio.addEventListener('play', function() {
+                    if (!audioManager.audioUnlocked) {
+                        this.pause();
+                        return;
+                    }
+                    
                     const card = this.closest('.soundtrack-card');
                     if(card) {
                         const wave = card.querySelector('.wave-animation');
@@ -879,33 +1008,13 @@
                         if(wave) wave.style.display = 'none';
                     }
                 });
-            });
-        }
-
-        // ВОСПРОИЗВЕДЕНИЕ DOG SONG
-        function playDogSong() {
-            const logo = document.getElementById('main-logo');
-            const audio = document.getElementById('dogSongAudio');
-            
-            logo.classList.add('bounce');
-            
-            try {
-                audio.currentTime = 0;
-                audio.play().catch(e => {
-                    console.log('Не удалось воспроизвести звук:', e);
+                
+                // Обработка ошибок
+                audio.addEventListener('error', function(e) {
+                    console.error('Ошибка воспроизведения:', e);
                 });
-            } catch (e) {
-                console.log('Аудио недоступно:', e);
-            }
-            
-            setTimeout(() => {
-                logo.classList.remove('bounce');
-            }, 600);
+            });
         }
     </script>
 </body>
-</html>document.addEventListener('DOMContentLoaded', function() {
-  initNavigation();
-  initButtonAnimations();
-  initAudioPlayers();
-});
+    </html> 
