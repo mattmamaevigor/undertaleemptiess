@@ -559,28 +559,28 @@
         <div class="container">
             <ul class="nav-links">
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('home')" class="nav-btn">Главная</a>
+                    <a href="#" onclick="showSection(event, 'home')" class="nav-btn">Главная</a>
                 </li>
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('about')" class="nav-btn active">О игре</a>
+                    <a href="#" onclick="showSection(event, 'about')" class="nav-btn active">О игре</a>
                 </li>
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('screenshots')" class="nav-btn">Скриншоты</a>
+                    <a href="#" onclick="showSection(event, 'screenshots')" class="nav-btn">Скриншоты</a>
                 </li>
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('soundtracks')" class="nav-btn">Саундтреки</a>
+                    <a href="#" onclick="showSection(event, 'soundtracks')" class="nav-btn">Саундтреки</a>
                 </li>
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('download')" class="nav-btn">Скачать</a>
+                    <a href="#" onclick="showSection(event, 'download')" class="nav-btn">Скачать</a>
                 </li>
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('news')" class="nav-btn">Новости</a>
+                    <a href="#" onclick="showSection(event, 'news')" class="nav-btn">Новости</a>
                 </li>
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('domains')" class="nav-btn">Домены</a>
+                    <a href="#" onclick="showSection(event, 'domains')" class="nav-btn">Домены</a>
                 </li>
                 <li class="nav-link">
-                    <a href="#" onclick="showSection('contact')" class="nav-btn">Контакты</a>
+                    <a href="#" onclick="showSection(event, 'contact')" class="nav-btn">Контакты</a>
                 </li>
             </ul>
         </div>
@@ -691,3 +691,41 @@
 
             <!-- Скачать -->
             <section id="download" class="content-section">
+                <h2 class="section-title">Скачать игру</h2>
+                <div class="about-content">
+                    <p class="game-description">
+                        Демо-версия находится в разработке.<br>
+                        Мы прикладываем максимум усилий, чтобы выпустить качественный продукт.<br><br>
+                        
+                        Планируемые платформы:<br>
+                        • Windows 10/11<br>
+                        • Linux<br>
+                        • Возможно Mac OS<br><br>
+                        
+                        Системные требования будут объявлены ближе к релизу.<br>
+                        Игра будет оптимизирована для слабых компьютеров.
+                    </p>
+                    <div class="download-area">
+                        <a href="#" class="download-btn">Демо скоро...</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Новости -->
+            <section id="news" class="content-section">
+                <h2 class="section-title">Новости разработки</h2>
+                
+                <div class="news-item">
+                    <div class="news-date">03 августа 2025</div>
+                    <div class="news-title">Запуск официального сайта</div>
+                    <div class="news-content">
+                        Сегодня мы запускаем официальный сайт проекта undertalemptiess! 
+                        Здесь вы сможете следить за новостями разработки, узнавать о новых функциях 
+                        и быть в курсе всех важных событий проекта.
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-date">Июль 2025</div>
+                    <div class="news-title">Начало разработки</div>
+                    <div class="news-content">
