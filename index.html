@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="yandex-verification" content="4d9cdb34c4d511bd" />
-    <title>undertalemptiess</title> <head>
-  Verification: ecb2f6a39230d469
-    </head>
+    <title>undertalemptiess</title>
     <link rel="stylesheet" type="text/css" href="//undertalefonts.duodecima.technology/webfonts/stylesheet.css">
     <style>
         * {
@@ -355,7 +353,135 @@
             line-height: 1.6;
         }
 
+        /* Soundtracks Section */
+        .soundtrack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
 
+        .soundtrack-card {
+            background: rgba(34, 34, 34, 0.8);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid #444;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .soundtrack-card:hover {
+            transform: translateY(-5px);
+            border-color: #888;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .soundtrack-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.05) 0%, 
+                transparent 50%, 
+                rgba(255,255,255,0.05) 100%);
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .track-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            font-family: 'Determination Mono', monospace;
+        }
+
+        .track-duration {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .audio-player audio {
+            width: 100%;
+            filter: grayscale(80%);
+            transition: filter 0.3s ease;
+        }
+
+        .audio-player audio:hover {
+            filter: grayscale(0%);
+        }
+
+        .track-placeholder {
+            height: 150px;
+            background: linear-gradient(135deg, #333, #555);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1.1rem;
+            margin-top: 15px;
+            border: 1px solid #444;
+            position: relative;
+            z-index: 1;
+        }
+
+        .composer-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(136, 136, 136, 0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #ccc;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Wave animation for audio players */
+        .wave-animation {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            height: 30px;
+            margin-bottom: 15px;
+        }
+
+        .wave-bar {
+            width: 4px;
+            height: 100%;
+            background: #666;
+            border-radius: 2px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { animation-delay: 0.6s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.3); }
+            50% { transform: scaleY(1); }
+        }
 
         /* Footer */
         footer {
@@ -406,6 +532,10 @@
                 width: 200px;
                 height: 200px;
             }
+            
+            .soundtrack-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -435,6 +565,9 @@
                 </li>
                 <li class="nav-link">
                     <a href="#" onclick="showSection('screenshots')" class="nav-btn">Скриншоты</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('soundtracks')" class="nav-btn">Саундтреки</a>
                 </li>
                 <li class="nav-link">
                     <a href="#" onclick="showSection('download')" class="nav-btn">Скачать</a>
@@ -507,6 +640,131 @@
                     Первые скриншоты появятся вместе с демо-версией игры!<br>
                     Мы работаем над каждой деталью, чтобы показать вам что-то действительно впечатляющее.
                 </p>
+            </section>
+
+            <!-- Саундтреки -->
+            <section id="soundtracks" class="content-section">
+                <h2 class="section-title">Саундтреки</h2>
+                <div class="about-content">
+                    <p class="game-description">
+                        Погрузитесь в атмосферу Undertale Emptiess через музыку!<br>
+                        Наши саундтреки сочетают ностальгию по оригиналу с новыми темами.<br><br>
+                        Каждая композиция создана с душой, чтобы усилить ваше игровое погружение.
+                    </p>
+                </div>
+                
+                <div class="soundtrack-grid">
+                    <!-- Трек 1 -->
+                    <div class="soundtrack-card">
+                        <span class="composer-badge">Toby Fox</span>
+                        <h3 class="track-title">Главная тема</h3>
+                        <div class="track-duration">2:45</div>
+                        
+                        <div class="wave-animation">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        
+                        <div class="audio-player">
+                            <audio controls>
+                                <source src="#" type="audio/mpeg">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+                        
+                        <div class="track-placeholder">Трек в разработке</div>
+                    </div>
+                    
+                    <!-- Трек 2 -->
+                    <div class="soundtrack-card">
+                        <span class="composer-badge">Mettaton</span>
+                        <h3 class="track-title">Битва с боссом</h3>
+                        <div class="track-duration">3:20</div>
+                        
+                        <div class="wave-animation">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        
+                        <div class="audio-player">
+                            <audio controls>
+                                <source src="#" type="audio/mpeg">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+                        
+                        <div class="track-placeholder">Трек в разработке</div>
+                    </div>
+                    
+                    <!-- Трек 3 -->
+                    <div class="soundtrack-card">
+                        <span class="composer-badge">Sans</span>
+                        <h3 class="track-title">Подземелье руин</h3>
+                        <div class="track-duration">4:15</div>
+                        
+                        <div class="wave-animation">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        
+                        <div class="audio-player">
+                            <audio controls>
+                                <source src="#" type="audio/mpeg">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+                        
+                        <div class="track-placeholder">Трек в разработке</div>
+                    </div>
+                    
+                    <!-- Трек 4 -->
+                    <div class="soundtrack-card">
+                        <span class="composer-badge">Undyne</span>
+                        <h3 class="track-title">Тема персонажа</h3>
+                        <div class="track-duration">2:30</div>
+                        
+                        <div class="wave-animation">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                        
+                        <div class="audio-player">
+                            <audio controls>
+                                <source src="#" type="audio/mpeg">
+                                Ваш браузер не поддерживает аудио элемент.
+                            </audio>
+                        </div>
+                        
+                        <div class="track-placeholder">Трек в разработке</div>
+                    </div>
+                </div>
+                
+                <div class="about-content" style="margin-top: 40px;">
+                    <p class="game-description">
+                        Полный саундтрек будет доступен вместе с релизом игры.<br>
+                        Следите за обновлениями - мы регулярно добавляем новые треки!
+                    </p>
+                </div>
             </section>
 
             <!-- Скачать -->
@@ -680,6 +938,19 @@
         document.querySelectorAll('.nav-btn').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
+            });
+        });
+        
+        // Анимация для аудиоплееров
+        document.querySelectorAll('audio').forEach(audio => {
+            audio.addEventListener('play', function() {
+                const waveAnimation = this.closest('.soundtrack-card').querySelector('.wave-animation');
+                waveAnimation.style.display = 'flex';
+            });
+            
+            audio.addEventListener('pause', function() {
+                const waveAnimation = this.closest('.soundtrack-card').querySelector('.wave-animation');
+                waveAnimation.style.display = 'none';
             });
         });
     </script>
