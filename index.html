@@ -1,1 +1,691 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <meta name="yandex-verification" content="ecb2f6a39230d469" />
+    <link rel="stylesheet" type="text/css" href="//undertalefonts.duodecima.technology/webfonts/stylesheet.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Determination Mono', monospace;
+            background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Background Heart */
+        .bg-heart {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .heart {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            width: 150px;
+            height: 240px;
+            position: absolute;
+            left: 75px;
+            transform: rotate(-45deg);
+            background: #888;
+            border-radius: 150px 150px 0 0;
+            transform-origin: 0 100%;
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #000, #222, #000);
+            padding: 60px 0;
+            border-bottom: 3px solid #444;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 3.5rem;
+            color: #fff;
+            font-family: 'Determination Mono', monospace;
+            letter-spacing: 3px;
+            position: relative;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo.bounce {
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+
+        @keyframes logoGlow {
+            0% { text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 30px rgba(255,255,255,0.1); }
+            100% { text-shadow: 0 0 30px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.2); }
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(90deg, #111, #333, #111);
+            padding: 25px 0;
+            border-bottom: 2px solid #444;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link a {
+            color: #ccc;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 15px 30px;
+            display: block;
+            font-family: 'Determination Mono', monospace;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            background: linear-gradient(145deg, #222, #111);
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .nav-link a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .nav-link a:hover {
+            color: #fff;
+            border: 2px solid #666;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: linear-gradient(145deg, #333, #222);
+        }
+
+        .nav-link a:hover::before {
+            left: 100%;
+        }
+
+        .nav-link a:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .nav-link a.active {
+            color: #fff;
+            border: 2px solid #888;
+            background: linear-gradient(145deg, #444, #333);
+        }
+
+        /* Main Content */
+        main {
+            background: transparent;
+            min-height: 100vh;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+            background: rgba(17, 17, 17, 0.8);
+            border-radius: 15px;
+            padding: 50px;
+            margin: 30px 0;
+            border: 1px solid #444;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 40px;
+            text-align: center;
+            font-family: 'Determination Mono', monospace;
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .game-title {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 30px;
+            font-family: 'Determination Mono', monospace;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        .game-description {
+            font-size: 1.4rem;
+            color: #ddd;
+            line-height: 2.2;
+            margin-bottom: 40px;
+            font-family: 'Determination Mono', monospace;
+        }
+
+        /* Screenshots Section */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .screenshot-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, #333, #555);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1.2rem;
+            border: 2px solid #444;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-placeholder:hover {
+            transform: scale(1.05);
+            border-color: #888;
+        }
+
+        /* Download Section */
+        .download-area {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(145deg, #444, #222);
+            color: #fff;
+            text-decoration: none;
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            border: 2px solid #666;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            font-family: 'Determination Mono', monospace;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(145deg, #555, #333);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* News Section */
+        .news-item {
+            background: rgba(34, 34, 34, 0.8);
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #888;
+        }
+
+        .news-date {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .news-content {
+            color: #ddd;
+            line-height: 1.8;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-card {
+            background: rgba(34, 34, 34, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #444;
+        }
+
+        .contact-card h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .contact-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+
+
+        /* Footer */
+        footer {
+            background: linear-gradient(90deg, #000, #111, #000);
+            padding: 50px 0;
+            border-top: 3px solid #444;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            font-size: 0.9rem;
+            color: #888;
+            font-family: 'Determination Mono', monospace;
+            line-height: 2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .content-section {
+                padding: 30px 20px;
+            }
+
+            .game-description {
+                font-size: 1.1rem;
+            }
+
+            .additional-text {
+                font-size: 1rem;
+                padding: 25px;
+            }
+
+            .bg-heart {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-heart">
+        <div class="heart"></div>
+    </div>
+
+    <header>
+        <div class="header-glow"></div>
+        <div class="container">
+            <h1 class="logo" onclick="playDogSong()">undertalemptiess</h1>
+            <audio id="dogSongAudio" preload="auto">
+                <source src="https://cdnjs.cloudflare.com/ajax/libs/ion-sound/3.0.7/sounds/bell_ring.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('home')" class="nav-btn">Главная</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('about')" class="nav-btn active">О игре</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('screenshots')" class="nav-btn">Скриншоты</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('download')" class="nav-btn">Скачать</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('news')" class="nav-btn">Новости</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('domains')" class="nav-btn">Домены</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" onclick="showSection('contact')" class="nav-btn">Контакты</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="main-container">
+            <!-- Главная -->
+            <section id="home" class="content-section">
+                <h2 class="section-title">Добро пожаловать</h2>
+                <div class="about-content">
+                    <h3 class="game-title">undertalemptiess</h3>
+                    <p class="game-description">
+                        Фанатская игра, вдохновленная легендарной вселенной Undertale.<br>
+                        Погрузитесь в новую историю, полную загадок, приключений и незабываемых встреч.<br><br>
+                        Здесь каждое решение имеет значение, каждый персонаж запомнится,<br>
+                        а каждый момент станет частью вашего уникального путешествия.<br><br>
+                        Приготовьтесь к встрече с новыми друзьями и врагами,<br>
+                        исследованию загадочных локаций и раскрытию тайн,<br>
+                        которые изменят ваше представление об этом мире навсегда.
+                    </p>
+                </div>
+            </section>
+
+            <!-- О игре -->
+            <section id="about" class="content-section active">
+                <h2 class="section-title">О игре</h2>
+                <div class="about-content">
+                    <h3 class="game-title">Undertale Emptiess</h3>
+                    <p class="game-description">
+                        Это фанатская игра по Undertale,<br>
+                        Остальное будет рассказано в Демо версии!<br>
+                        Всем удачи!<br><br>
+                        
+                        Наша команда работает над созданием уникального опыта,<br>
+                        который сохранит дух оригинальной игры, но предложит<br>
+                        совершенно новую историю и механики.<br><br>
+                        
+                        Мы вкладываем всю душу в каждый пиксель, каждую ноту музыки<br>
+                        и каждую строчку диалога, чтобы создать что-то действительно особенное.<br><br>
+                        
+                        Следите за обновлениями - скоро вы сможете окунуться<br>
+                        в этот удивительный мир сами!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Скриншоты -->
+            <section id="screenshots" class="content-section">
+                <h2 class="section-title">Скриншоты</h2>
+                <div class="screenshot-grid">
+                    <div class="screenshot-placeholder">Скриншот 1 - Скоро</div>
+                    <div class="screenshot-placeholder">Скриншот 2 - Скоро</div>
+                    <div class="screenshot-placeholder">Скриншот 3 - Скоро</div>
+                    <div class="screenshot-placeholder">Скриншот 4 - Скоро</div>
+                </div>
+                <p style="text-align: center; margin-top: 30px; color: #ccc; font-size: 1.1rem;">
+                    Первые скриншоты появятся вместе с демо-версией игры!<br>
+                    Мы работаем над каждой деталью, чтобы показать вам что-то действительно впечатляющее.
+                </p>
+            </section>
+
+            <!-- Скачать -->
+            <section id="download" class="content-section">
+                <h2 class="section-title">Скачать игру</h2>
+                <div class="about-content">
+                    <p class="game-description">
+                        Демо-версия находится в разработке.<br>
+                        Мы прикладываем максимум усилий, чтобы выпустить качественный продукт.<br><br>
+                        
+                        Планируемые платформы:<br>
+                        • Windows 10/11<br>
+                        • Linux<br>
+                        • Возможно Mac OS<br><br>
+                        
+                        Системные требования будут объявлены ближе к релизу.<br>
+                        Игра будет оптимизирована для слабых компьютеров.
+                    </p>
+                    <div class="download-area">
+                        <a href="#" class="download-btn">Демо скоро...</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Новости -->
+            <section id="news" class="content-section">
+                <h2 class="section-title">Новости разработки</h2>
+                
+                <div class="news-item">
+                    <div class="news-date">03 августа 2025</div>
+                    <div class="news-title">Запуск официального сайта</div>
+                    <div class="news-content">
+                        Сегодня мы запускаем официальный сайт проекта undertalemptiess! 
+                        Здесь вы сможете следить за новостями разработки, узнавать о новых функциях 
+                        и быть в курсе всех важных событий проекта.
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <div class="news-date">Июль 2025</div>
+                    <div class="news-title">Начало разработки</div>
+                    <div class="news-content">
+                        Официально начата работа над проектом undertalemptiess. 
+                        Команда разработчиков приступила к созданию концепт-артов, 
+                        написанию сценария и проработке игровых механик.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Домены -->
+            <section id="domains" class="content-section">
+                <h2 class="section-title">Домены</h2>
+                <div class="about-content">
+                    <p class="game-description">
+                        Официальные домены проекта undertalemptiess:<br><br>
+                        
+                        <strong>Основной домен:</strong><br>
+                        undertalemptiess.ru<br><br>
+                        
+                        <strong>Зеркала и альтернативные домены:</strong><br>
+                        (будут добавлены в будущем)<br><br>
+                        
+                        Убедитесь, что вы используете только официальные домены<br>
+                        для загрузки игры и получения информации о проекте.<br><br>
+                        
+                        Остерегайтесь поддельных сайтов и всегда проверяйте URL!
+                    </p>
+                </div>
+            </section>
+
+            <!-- Контакты -->
+            <section id="contact" class="content-section">
+                <h2 class="section-title">Связь с нами</h2>
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>Для связи с разработчиками</h3>
+                        <p><strong>Discord:</strong> tennaspamtonjevil<br><br>
+                        Напишите нам, если у вас есть вопросы,<br>
+                        предложения или вы хотите помочь с проектом!</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>Сообщество</h3>
+                        <p>Присоединяйтесь к нашему растущему сообществу<br>
+                        фанатов Undertale! Обсуждайте игру,<br>
+                        делитесь теориями и находите новых друзей.</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>Поддержка</h3>
+                        <p>Если вы хотите поддержать проект<br>
+                        или принять участие в разработке,<br>
+                        мы будем очень благодарны за помощь!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 undertalemptiess | Фанатский проект</p>
+                <p>Undertale создана Тоби Фоксом</p>
+                <p>Этот проект не связан с официальными разработчиками</p>
+                <p>Сайт оптимизирован для всех современных браузеров</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для воспроизведения Dogsong и анимации прыжка логотипа
+        function playDogSong() {
+            const logo = document.querySelector('.logo');
+            const audio = document.getElementById('dogSongAudio');
+            
+            // Добавить класс анимации прыжка
+            logo.classList.add('bounce');
+            
+            // Попытаться воспроизвести звук
+            try {
+                audio.currentTime = 0;
+                audio.play().catch(e => {
+                    console.log('Не удалось воспроизвести звук:', e);
+                });
+            } catch (e) {
+                console.log('Аудио недоступно:', e);
+            }
+            
+            // Убрать класс анимации после завершения
+            setTimeout(() => {
+                logo.classList.remove('bounce');
+            }, 600);
+        }
+
+        function showSection(sectionId) {
+            // Убрать активный класс со всех кнопок
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Скрыть все секции
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Показать выбранную секцию
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Добавить активный класс к нажатой кнопке
+            event.target.classList.add('active');
+        }
+
+        // Улучшенная анимация нажатия кнопок
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(-1px)';
+            });
+            
+            btn.addEventListener('mouseup', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Smooth scrolling для навигации
+        document.querySelectorAll('.nav-btn').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+              </html>
+
+
+
+
+
+<meta name="yandex-verification" content="ecb2f6a39230d469" />
