@@ -4,30 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="yandex-verification" content="4d9cdb34c4d511bd">
-    <meta name="description" content="undertalemptiess - фанатская игра по вселенной Undertale. Новая история, уникальные персонажи и незабываемые приключения.">
-    <title>undertalemptiess - Фанатская игра по Undertale</title>
-    <link rel="preconnect" href="https://undertalefonts.duodecima.technology">
+    <title>undertalemptiess</title>
     <link rel="stylesheet" type="text/css" href="//undertalefonts.duodecima.technology/webfonts/stylesheet.css">
     <style>
-        :root {
-            --primary-bg: #000;
-            --secondary-bg: #111;
-            --accent-bg: #222;
-            --text-primary: #fff;
-            --text-secondary: #ccc;
-            --text-muted: #888;
-            --border-primary: #444;
-            --border-secondary: #666;
-            --shadow-primary: rgba(0,0,0,0.5);
-            --glow-primary: rgba(255,255,255,0.3);
-            --transition-fast: 0.3s ease;
-            --transition-medium: 0.4s ease;
-            --border-radius: 10px;
-            --spacing-small: 15px;
-            --spacing-medium: 30px;
-            --spacing-large: 50px;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -36,8 +15,8 @@
 
         body {
             font-family: 'Determination Mono', monospace;
-            background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 50%, var(--primary-bg) 100%);
-            color: var(--text-primary);
+            background: linear-gradient(135deg, #000 0%, #111 50%, #000 100%);
+            color: #fff;
             overflow-x: hidden;
             line-height: 1.6;
             min-height: 100vh;
@@ -49,17 +28,21 @@
             padding: 0 20px;
         }
 
-        /* Оптимизированное сердце с использованием CSS transform3d для лучшей производительности */
         .bg-heart {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate3d(-50%, -50%, 0);
+            transform: translate(-50%, -50%);
             width: 300px;
             height: 300px;
             z-index: -1;
             opacity: 0.1;
-            will-change: transform;
+        }
+
+        .heart {
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
 
         .heart::before,
@@ -68,13 +51,10 @@
             width: 150px;
             height: 240px;
             position: absolute;
-            background: var(--text-muted);
-            border-radius: 150px 150px 0 0;
-        }
-
-        .heart::before {
             left: 75px;
             transform: rotate(-45deg);
+            background: #888;
+            border-radius: 150px 150px 0 0;
             transform-origin: 0 100%;
         }
 
@@ -84,33 +64,34 @@
             transform-origin: 100% 100%;
         }
 
-        /* Оптимизированный header */
         header {
-            background: linear-gradient(90deg, var(--primary-bg), var(--accent-bg), var(--primary-bg));
+            background: linear-gradient(90deg, #000, #222, #000);
             padding: 60px 0;
-            border-bottom: 3px solid var(--border-primary);
+            border-bottom: 3px solid #444;
             position: relative;
             overflow: hidden;
         }
 
         .header-glow {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
-            pointer-events: none;
         }
 
         .logo {
             text-align: center;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            color: var(--text-primary);
+            font-size: 3.5rem;
+            color: #fff;
+            font-family: 'Determination Mono', monospace;
             letter-spacing: 3px;
             position: relative;
-            text-shadow: 0 0 20px var(--glow-primary);
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
             animation: logoGlow 3s ease-in-out infinite alternate;
             cursor: pointer;
-            transition: transform var(--transition-fast);
-            user-select: none;
+            transition: transform 0.3s ease;
         }
 
         .logo.bounce {
@@ -124,19 +105,15 @@
         }
 
         @keyframes logoGlow {
-            0% { text-shadow: 0 0 20px var(--glow-primary), 0 0 30px rgba(255,255,255,0.1); }
+            0% { text-shadow: 0 0 20px rgba(255,255,255,0.3), 0 0 30px rgba(255,255,255,0.1); }
             100% { text-shadow: 0 0 30px rgba(255,255,255,0.5), 0 0 40px rgba(255,255,255,0.2); }
         }
 
-        /* Оптимизированная навигация */
         nav {
-            background: linear-gradient(90deg, var(--secondary-bg), var(--accent-bg), var(--secondary-bg));
+            background: linear-gradient(90deg, #111, #333, #111);
             padding: 25px 0;
-            border-bottom: 2px solid var(--border-primary);
-            box-shadow: 0 5px 20px var(--shadow-primary);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom: 2px solid #444;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
         }
 
         .nav-links {
@@ -147,19 +124,25 @@
             flex-wrap: wrap;
         }
 
+        .nav-link {
+            position: relative;
+        }
+
         .nav-link a {
-            color: var(--text-secondary);
+            color: #ccc;
             text-decoration: none;
             font-size: 1rem;
-            padding: var(--spacing-small) var(--spacing-medium);
+            padding: 15px 30px;
             display: block;
-            transition: all var(--transition-medium);
+            font-family: 'Determination Mono', monospace;
+            transition: all 0.4s ease;
             border: 2px solid transparent;
-            background: linear-gradient(145deg, var(--accent-bg), var(--secondary-bg));
+            background: linear-gradient(145deg, #222, #111);
             position: relative;
             overflow: hidden;
             border-radius: 5px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer;
         }
 
         .nav-link a::before {
@@ -174,11 +157,11 @@
         }
 
         .nav-link a:hover {
-            color: var(--text-primary);
-            border-color: var(--border-secondary);
+            color: #fff;
+            border: 2px solid #666;
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            background: linear-gradient(145deg, #333, var(--accent-bg));
+            background: linear-gradient(145deg, #333, #222);
         }
 
         .nav-link a:hover::before {
@@ -186,13 +169,13 @@
         }
 
         .nav-link a.active {
-            color: var(--text-primary);
-            border-color: var(--text-muted);
+            color: #fff;
+            border: 2px solid #888;
             background: linear-gradient(145deg, #444, #333);
         }
 
-        /* Основной контент */
         main {
+            background: transparent;
             min-height: 100vh;
             padding: 80px 0;
             position: relative;
@@ -202,11 +185,11 @@
             display: none;
             animation: fadeInUp 0.6s ease-out;
             background: rgba(17, 17, 17, 0.8);
-            border-radius: var(--spacing-small);
-            padding: var(--spacing-large);
-            margin: var(--spacing-medium) 0;
-            border: 1px solid var(--border-primary);
-            box-shadow: 0 10px 40px var(--shadow-primary);
+            border-radius: 15px;
+            padding: 50px;
+            margin: 30px 0;
+            border: 1px solid #444;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             backdrop-filter: blur(10px);
         }
 
@@ -217,20 +200,21 @@
         @keyframes fadeInUp {
             from { 
                 opacity: 0; 
-                transform: translate3d(0, 30px, 0); 
+                transform: translateY(30px); 
             }
             to { 
                 opacity: 1; 
-                transform: translate3d(0, 0, 0); 
+                transform: translateY(0); 
             }
         }
 
         .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            color: var(--text-primary);
+            font-size: 2.5rem;
+            color: #fff;
             margin-bottom: 40px;
             text-align: center;
-            text-shadow: 0 0 15px var(--glow-primary);
+            font-family: 'Determination Mono', monospace;
+            text-shadow: 0 0 15px rgba(255,255,255,0.3);
         }
 
         .about-content {
@@ -240,61 +224,62 @@
         }
 
         .game-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-medium);
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 30px;
+            font-family: 'Determination Mono', monospace;
             text-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
 
         .game-description {
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-size: 1.4rem;
             color: #ddd;
             line-height: 2.2;
             margin-bottom: 40px;
+            font-family: 'Determination Mono', monospace;
         }
 
-        /* Оптимизированная сетка скриншотов */
         .screenshot-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: var(--spacing-medium);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 40px;
         }
 
         .screenshot-placeholder {
-            aspect-ratio: 16/9;
+            height: 200px;
             background: linear-gradient(135deg, #333, #555);
-            border-radius: var(--border-radius);
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-muted);
+            color: #888;
             font-size: 1.2rem;
-            border: 2px solid var(--border-primary);
-            transition: all var(--transition-fast);
+            border: 2px solid #444;
+            transition: all 0.3s ease;
         }
 
         .screenshot-placeholder:hover {
-            transform: scale(1.02);
-            border-color: var(--text-muted);
+            transform: scale(1.05);
+            border-color: #888;
         }
 
-        /* Кнопка загрузки */
         .download-area {
             text-align: center;
-            margin-top: var(--spacing-large);
+            margin-top: 50px;
         }
 
         .download-btn {
             display: inline-block;
-            background: linear-gradient(145deg, #444, var(--accent-bg));
-            color: var(--text-primary);
+            background: linear-gradient(145deg, #444, #222);
+            color: #fff;
             text-decoration: none;
             padding: 20px 40px;
             font-size: 1.2rem;
-            border: 2px solid var(--border-secondary);
-            border-radius: var(--border-radius);
-            transition: all var(--transition-medium);
+            border: 2px solid #666;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            font-family: 'Determination Mono', monospace;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
@@ -304,25 +289,24 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
-        /* Новости и карточки */
         .news-item {
             background: rgba(34, 34, 34, 0.8);
-            padding: var(--spacing-medium);
+            padding: 30px;
             margin: 20px 0;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--text-muted);
+            border-radius: 10px;
+            border-left: 4px solid #888;
         }
 
         .news-date {
-            color: var(--text-muted);
+            color: #888;
             font-size: 0.9rem;
             margin-bottom: 10px;
         }
 
         .news-title {
-            color: var(--text-primary);
+            color: #fff;
             font-size: 1.3rem;
-            margin-bottom: var(--spacing-small);
+            margin-bottom: 15px;
         }
 
         .news-content {
@@ -330,148 +314,164 @@
             line-height: 1.8;
         }
 
-        /* Контакты */
         .contact-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--spacing-medium);
+            gap: 30px;
             margin-top: 40px;
         }
 
         .contact-card {
             background: rgba(34, 34, 34, 0.8);
-            padding: var(--spacing-medium);
-            border-radius: var(--border-radius);
+            padding: 30px;
+            border-radius: 10px;
             text-align: center;
-            border: 1px solid var(--border-primary);
-            transition: transform var(--transition-fast);
-        }
-
-        .contact-card:hover {
-            transform: translateY(-5px);
+            border: 1px solid #444;
         }
 
         .contact-card h3 {
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-small);
+            color: #fff;
+            margin-bottom: 15px;
             font-size: 1.2rem;
         }
 
         .contact-card p {
-            color: var(--text-secondary);
+            color: #ccc;
             line-height: 1.6;
         }
 
-        /* Саундтреки */
         .soundtrack-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: var(--spacing-medium);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
             margin-top: 40px;
         }
 
         .soundtrack-card {
             background: rgba(34, 34, 34, 0.8);
-            border-radius: var(--border-radius);
+            border-radius: 10px;
             padding: 25px;
-            border: 1px solid var(--border-primary);
-            transition: all var(--transition-fast);
+            border: 1px solid #444;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
         .soundtrack-card:hover {
             transform: translateY(-5px);
-            border-color: var(--text-muted);
+            border-color: #888;
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-        }
-
-        .soundtrack-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, 
-                rgba(255,255,255,0.05) 0%, 
-                transparent 50%, 
-                rgba(255,255,255,0.05) 100%);
-            opacity: 0.3;
-            pointer-events: none;
         }
 
         .track-title {
             font-size: 1.4rem;
-            color: var(--text-primary);
-            margin-bottom: var(--spacing-small);
-            position: relative;
-            z-index: 1;
+            color: #fff;
+            margin-bottom: 15px;
+            font-family: 'Determination Mono', monospace;
         }
 
         .track-duration {
-            color: var(--text-muted);
+            color: #888;
             font-size: 0.9rem;
-            margin-bottom: var(--spacing-small);
+            margin-bottom: 15px;
+        }
+
+        /* Простой кастомный плеер */
+        .simple-audio-player {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 1px solid #444;
+        }
+
+        .simple-player-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .simple-play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+            border: 2px solid #666;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .simple-play-btn:hover {
+            background: #555;
+            transform: scale(1.1);
+        }
+
+        .simple-time {
+            color: #ccc;
+            font-size: 0.9rem;
+            min-width: 80px;
+        }
+
+        .simple-progress {
+            flex: 1;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
             position: relative;
-            z-index: 1;
+            cursor: pointer;
         }
 
-        .audio-player {
-            width: 100%;
-            margin-top: var(--spacing-small);
-            position: relative;
-            z-index: 1;
-        }
-
-        .audio-player audio {
-            width: 100%;
-            filter: grayscale(80%);
-            transition: filter var(--transition-fast);
-        }
-
-        .audio-player audio:hover {
-            filter: grayscale(0%);
+        .simple-progress-bar {
+            height: 100%;
+            background: #666;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s ease;
         }
 
         .track-placeholder {
-            aspect-ratio: 16/9;
+            height: 150px;
             background: linear-gradient(135deg, #333, #555);
             border-radius: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-muted);
+            color: #888;
             font-size: 1.1rem;
-            margin-top: var(--spacing-small);
-            border: 1px solid var(--border-primary);
-            position: relative;
-            z-index: 1;
+            margin-top: 15px;
+            border: 1px solid #444;
         }
 
         .composer-badge {
             position: absolute;
-            top: var(--spacing-small);
-            right: var(--spacing-small);
+            top: 15px;
+            right: 15px;
             background: rgba(136, 136, 136, 0.2);
             padding: 5px 10px;
             border-radius: 15px;
             font-size: 0.8rem;
-            color: var(--text-secondary);
-            z-index: 2;
+            color: #ccc;
             backdrop-filter: blur(5px);
         }
 
-        /* Анимация волн */
         .wave-animation {
             display: flex;
             justify-content: center;
             gap: 3px;
             height: 30px;
-            margin-bottom: var(--spacing-small);
+            margin-bottom: 15px;
         }
 
         .wave-bar {
             width: 4px;
             height: 100%;
-            background: var(--border-secondary);
+            background: #666;
             border-radius: 2px;
             animation: wave 1.2s ease-in-out infinite;
         }
@@ -488,23 +488,30 @@
             50% { transform: scaleY(1); }
         }
 
-        /* Footer */
         footer {
-            background: linear-gradient(90deg, var(--primary-bg), var(--secondary-bg), var(--primary-bg));
-            padding: var(--spacing-large) 0;
-            border-top: 3px solid var(--border-primary);
+            background: linear-gradient(90deg, #000, #111, #000);
+            padding: 50px 0;
+            border-top: 3px solid #444;
             text-align: center;
             margin-top: 80px;
         }
 
         .footer-content {
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: #888;
+            font-family: 'Determination Mono', monospace;
             line-height: 2;
         }
 
-        /* Responsive design */
         @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
             .nav-links {
                 flex-direction: column;
                 align-items: center;
@@ -512,7 +519,11 @@
             }
 
             .content-section {
-                padding: var(--spacing-medium) 20px;
+                padding: 30px 20px;
+            }
+
+            .game-description {
+                font-size: 1.1rem;
             }
 
             .bg-heart {
@@ -524,37 +535,14 @@
                 grid-template-columns: 1fr;
             }
 
-            .contact-info {
-                grid-template-columns: 1fr;
+            .simple-player-controls {
+                flex-wrap: wrap;
+                gap: 10px;
             }
-        }
 
-        /* Улучшенная производительность */
-        .logo,
-        .nav-link a,
-        .screenshot-placeholder,
-        .soundtrack-card,
-        .contact-card {
-            will-change: transform;
-        }
-
-        /* Accessibility improvements */
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
+            .simple-time {
+                font-size: 0.8rem;
             }
-        }
-
-        /* Focus indicators */
-        .nav-link a:focus,
-        .download-btn:focus,
-        .logo:focus {
-            outline: 2px solid var(--text-primary);
-            outline-offset: 2px;
         }
     </style>
 </head>
@@ -566,8 +554,8 @@
     <header>
         <div class="header-glow"></div>
         <div class="container">
-            <h1 class="logo" id="main-logo" tabindex="0" role="button" aria-label="Логотип undertalemptiess, нажмите для воспроизведения музыки">undertalemptiess</h1>
-            <audio id="dogSongAudio" preload="none" aria-label="Фоновая музыка Dogsong">
+            <h1 class="logo" id="main-logo">undertalemptiess</h1>
+            <audio id="dogSongAudio" preload="auto">
                 <source src="https://vgmsite.com/soundtracks/undertale/jxqkpqkd/101-dogsong.mp3" type="audio/mpeg">
             </audio>
         </div>
@@ -575,15 +563,31 @@
 
     <nav>
         <div class="container">
-            <ul class="nav-links" role="navigation" aria-label="Основная навигация">
-                <li class="nav-link"><a href="#home" data-section="home" class="nav-btn">Главная</a></li>
-                <li class="nav-link"><a href="#about" data-section="about" class="nav-btn active">О игре</a></li>
-                <li class="nav-link"><a href="#screenshots" data-section="screenshots" class="nav-btn">Скриншоты</a></li>
-                <li class="nav-link"><a href="#soundtracks" data-section="soundtracks" class="nav-btn">Саундтреки</a></li>
-                <li class="nav-link"><a href="#download" data-section="download" class="nav-btn">Скачать</a></li>
-                <li class="nav-link"><a href="#news" data-section="news" class="nav-btn">Новости</a></li>
-                <li class="nav-link"><a href="#domains" data-section="domains" class="nav-btn">Домены</a></li>
-                <li class="nav-link"><a href="#contact" data-section="contact" class="nav-btn">Контакты</a></li>
+            <ul class="nav-links">
+                <li class="nav-link">
+                    <a href="#" data-section="home" class="nav-btn">Главная</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" data-section="about" class="nav-btn active">О игре</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" data-section="screenshots" class="nav-btn">Скриншоты</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" data-section="soundtracks" class="nav-btn">Саундтреки</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" data-section="download" class="nav-btn">Скачать</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" data-section="news" class="nav-btn">Новости</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" data-section="domains" class="nav-btn">Домены</a>
+                </li>
+                <li class="nav-link">
+                    <a href="#" data-section="contact" class="nav-btn">Контакты</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -667,8 +671,15 @@
                             <div class="wave-bar"></div>
                         </div>
                         
-                        <div class="audio-player">
-                            <audio controls preload="none" aria-label="Главная тема Undertale Emptiess">
+                        <div class="simple-audio-player">
+                            <div class="simple-player-controls">
+                                <button class="simple-play-btn" id="playBtn">▶</button>
+                                <span class="simple-time" id="timeDisplay">0:00 / 2:30</span>
+                                <div class="simple-progress" id="progressBar">
+                                    <div class="simple-progress-bar" id="progressFill"></div>
+                                </div>
+                            </div>
+                            <audio id="mainTrack" preload="metadata">
                                 <source src="https://cdn.jumpshare.com/preview/HIQXqG8vATqJVIJc1hTS?type=audio" type="audio/mpeg">
                                 Ваш браузер не поддерживает аудио элемент.
                             </audio>
@@ -702,7 +713,7 @@
                         Игра будет оптимизирована для слабых компьютеров.
                     </p>
                     <div class="download-area">
-                        <a href="#" class="download-btn" aria-label="Демо версия скоро будет доступна">Демо скоро...</a>
+                        <a href="#" class="download-btn">Демо скоро...</a>
                     </div>
                 </div>
             </section>
@@ -710,25 +721,25 @@
             <section id="news" class="content-section">
                 <h2 class="section-title">Новости разработки</h2>
                 
-                <article class="news-item">
+                <div class="news-item">
                     <div class="news-date">03 августа 2025</div>
-                    <h3 class="news-title">Запуск официального сайта</h3>
+                    <div class="news-title">Запуск официального сайта</div>
                     <div class="news-content">
                         Сегодня мы запускаем официальный сайт проекта undertalemptiess! 
                         Здесь вы сможете следить за новостями разработки, узнавать о новых функциях 
                         и быть в курсе всех важных событий проекта.
                     </div>
-                </article>
+                </div>
 
-                <article class="news-item">
+                <div class="news-item">
                     <div class="news-date">Июль 2025</div>
-                    <h3 class="news-title">Начало разработки</h3>
+                    <div class="news-title">Начало разработки</div>
                     <div class="news-content">
                         Официально начата работа над проектом undertalemptiess. 
                         Команда разработчиков приступила к созданию концепт-артов, 
                         написанию сценария и проработке игровых механик.
                     </div>
-                </article>
+                </div>
             </section>
 
             <section id="domains" class="content-section">
@@ -747,3 +758,190 @@
                         для загрузки игры и получения информации о проекте.<br><br>
                         
                         Остерегайтесь поддельных сайтов и всегда проверяйте URL!
+                    </p>
+                </div>
+            </section>
+
+            <section id="contact" class="content-section">
+                <h2 class="section-title">Связь с нами</h2>
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>Для связи с разработчиками</h3>
+                        <p><strong>Discord:</strong> tennaspamtonjevil<br><br>
+                        Напишите нам, если у вас есть вопросы,<br>
+                        предложения или вы хотите помочь с проектом!</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>Сообщество</h3>
+                        <p>Присоединяйтесь к нашему растущему сообществу<br>
+                        фанатов Undertale! Обсуждайте игру,<br>
+                        делитесь теориями и находите новых друзей.</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>Поддержка</h3>
+                        <p>Если вы хотите поддержать проект<br>
+                        или принять участие в разработке,<br>
+                        мы будем очень благодарны за помощь!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 undertalemptiess | Фанатский проект</p>
+                <p>Undertale создана Тоби Фоксом</p>
+                <p>Этот проект не связан с официальными разработчиками</p>
+                <p>Сайт оптимизирован для всех современных браузеров</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Переменные
+        let currentAudio = null;
+        let isPlaying = false;
+        let currentTime = 0;
+        let duration = 0;
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            initNavigation();
+            initAudioPlayer();
+            initLogoClick();
+            showSection('about');
+        });
+
+        // Навигация
+        function initNavigation() {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+        }
+
+        function showSection(sectionId) {
+            // Скрыть все секции
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Показать выбранную секцию
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Обновить активные кнопки
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-section') === sectionId) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        // Простой аудиоплеер
+        function initAudioPlayer() {
+            const audio = document.getElementById('mainTrack');
+            const playBtn = document.getElementById('playBtn');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+
+            if (!audio || !playBtn) return;
+
+            // Обработчик кнопки воспроизведения
+            playBtn.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play().then(() => {
+                        playBtn.textContent = '⏸';
+                        isPlaying = true;
+                    }).catch(e => {
+                        console.log('Ошибка воспроизведения:', e);
+                        playBtn.textContent = '❌';
+                    });
+                } else {
+                    audio.pause();
+                    playBtn.textContent = '▶';
+                    isPlaying = false;
+                }
+            });
+
+            // Обновление времени и прогресса
+            audio.addEventListener('timeupdate', function() {
+                if (audio.duration) {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    progressFill.style.width = progress + '%';
+                    
+                    const current = formatTime(audio.currentTime);
+                    const total = formatTime(audio.duration);
+                    timeDisplay.textContent = `${current} / ${total}`;
+                }
+            });
+
+            // Клик по прогресс-бару
+            progressBar.addEventListener('click', function(e) {
+                if (audio.duration) {
+                    const rect = progressBar.getBoundingClientRect();
+                    const percent = (e.clientX - rect.left) / rect.width;
+                    audio.currentTime = percent * audio.duration;
+                }
+            });
+
+            // Окончание воспроизведения
+            audio.addEventListener('ended', function() {
+                playBtn.textContent = '▶';
+                isPlaying = false;
+                progressFill.style.width = '0%';
+            });
+
+            // Загрузка метаданных
+            audio.addEventListener('loadedmetadata', function() {
+                const total = formatTime(audio.duration);
+                timeDisplay.textContent = `0:00 / ${total}`;
+            });
+
+            // Ошибка загрузки
+            audio.addEventListener('error', function() {
+                playBtn.textContent = '❌';
+                timeDisplay.textContent = 'Ошибка загрузки';
+            });
+        }
+
+        // Форматирование времени
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Логотип и Dogsong
+        function initLogoClick() {
+            const logo = document.getElementById('main-logo');
+            const dogAudio = document.getElementById('dogSongAudio');
+            
+            if (logo && dogAudio) {
+                logo.addEventListener('click', function() {
+                    logo.classList.add('bounce');
+                    
+                    dogAudio.currentTime = 0;
+                    dogAudio.play().catch(e => {
+                        console.log('Dogsong не загружен:', e);
+                    });
+                    
+                    setTimeout(() => {
+                        logo.classList.remove('bounce');
+                    }, 600);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
