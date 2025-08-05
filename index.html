@@ -340,6 +340,46 @@
             line-height: 1.6;
         }
 
+        /* Стили для соцсетей */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(145deg, #444, #222);
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border: 2px solid #666;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            font-family: 'Determination Mono', monospace;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .social-btn:hover {
+            background: linear-gradient(145deg, #555, #333);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border-color: #888;
+        }
+
+        .social-icon {
+            font-size: 1.3rem;
+        }
+
+        .gamejolt-btn:hover {
+            background: linear-gradient(145deg, #4CAF50, #2E7D32);
+            border-color: #4CAF50;
+        }
+
         .soundtrack-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -588,6 +628,9 @@
                 <li class="nav-link">
                     <a href="#" data-section="contact" class="nav-btn">Контакты</a>
                 </li>
+                <li class="nav-link">
+                    <a href="#" data-section="social" class="nav-btn">Соцсети</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -785,6 +828,29 @@
                     </div>
                 </div>
             </section>
+
+            <section id="social" class="content-section">
+                <h2 class="section-title">Соцсети</h2>
+                <div class="about-content">
+                    <p class="game-description">
+                        Если вы хотите связаться с нами, напишите в дискорд tennaspamtonjevil для связи с разработчиками<br><br>
+                        
+                        Ссылка на gamejolt:
+                    </p>
+                    
+                    <div class="social-links" style="margin-top: 30px;">
+                        <a href="https://gamejolt.com/games/undertalemptiess/1006118" target="_blank" class="social-btn gamejolt-btn">
+                            <span class="social-icon">🎮</span>
+                            GameJolt - undertalemptiess
+                        </a>
+                    </div>
+                    
+                    <p class="game-description" style="margin-top: 30px;">
+                        Следите за нами в социальных сетях, чтобы быть в курсе всех новостей разработки!<br>
+                        Там вы найдете эксклюзивный контент, скриншоты в процессе разработки и многое другое.
+                    </p>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -837,17 +903,38 @@
             const progressFill = document.getElementById('progressFill');
 
             if (audio && playBtn) {
+                // Добавляем обработчик для мобильных устройств
+                audio.addEventListener('canplaythrough', function() {
+                    console.log('Аудио готово к воспроизведению');
+                });
+
                 playBtn.addEventListener('click', function() {
+                    console.log('Клик по кнопке play, состояние:', audio.paused);
+                    
                     if (audio.paused) {
-                        audio.play().then(() => {
-                            playBtn.textContent = '⏸';
-                        }).catch(e => {
-                            console.log('Ошибка воспроизведения:', e);
-                            playBtn.textContent = '❌';
-                        });
+                        // Для мобильных устройств
+                        audio.load(); // Перезагружаем аудио
+                        
+                        const playPromise = audio.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                playBtn.textContent = '⏸';
+                                console.log('Воспроизведение началось');
+                            }).catch(e => {
+                                console.log('Ошибка воспроизведения:', e);
+                                playBtn.textContent = '❌';
+                                
+                                // Показываем стандартные контролы на мобильных
+                                audio.controls = true;
+                                audio.style.display = 'block';
+                                audio.style.width = '100%';
+                                audio.style.marginTop = '10px';
+                            });
+                        }
                     } else {
                         audio.pause();
                         playBtn.textContent = '▶';
+                        console.log('Воспроизведение остановлено');
                     }
                 });
 
@@ -915,4 +1002,4 @@
         });
     </script>
 </body>
-                                </html>
+</html>
