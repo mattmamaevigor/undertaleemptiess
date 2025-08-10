@@ -390,6 +390,36 @@
             border-color: #66BB6A;
         }
 
+        /* Стили для поддержки */
+        .support-info {
+            display: flex;
+            justify-content: center;
+        }
+
+        .support-card {
+            background: rgba(34, 34, 34, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #444;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .support-card h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .support-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .support-card li {
+            margin: 8px 0;
+        }
+
         .soundtrack-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -638,6 +668,9 @@
                 <li class="nav-link">
                     <a href="#" data-section="social" class="nav-btn">Соцсети</a>
                 </li>
+                <li class="nav-link">
+                    <a href="#" data-section="support" class="nav-btn">Поддержка</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -845,6 +878,35 @@
                     </p>
                 </div>
             </section>
+
+            <section id="support" class="content-section">
+                <h2 class="section-title">Поддержка проекта</h2>
+                <div class="about-content">
+                    <p class="game-description">
+                        Если хотите чтобы проект продвигался дальше, и быстрее,<br>
+                        пожалуйста пожертвуйте нам<br><br>
+                        
+                        <strong>Альфа банк: 89174150716</strong>
+                    </p>
+                    
+                    <div class="support-info" style="margin-top: 40px;">
+                        <div class="support-card">
+                            <h3>💝 Ваша поддержка поможет нам:</h3>
+                            <ul style="text-align: left; color: #ddd; line-height: 1.8; margin-top: 20px;">
+                                <li>• Ускорить разработку демо-версии</li>
+                                <li>• Улучшить качество графики и музыки</li>
+                                <li>• Добавить больше контента в игру</li>
+                                <li>• Поддерживать регулярные обновления</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p class="game-description" style="margin-top: 30px; color: #888;">
+                        Любая сумма будет очень ценна для нас!<br>
+                        Спасибо за поддержку Undertale Emptiess! ❤️
+                    </p>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -996,4 +1058,4 @@
         });
     </script>
 </body>
-    </html>
+</html>
